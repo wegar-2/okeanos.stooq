@@ -1,0 +1,22 @@
+Package: okeanos.stooq.interface
+Type: Package
+Title: Fetch free financial data from stooq.com
+Version: 1.0.0
+Author: Artur Wegrzyn
+Maintainer: Artur Wegrzyn <awegrzyn17@gmail.com>
+Description: Fetch financial data from Stooq (https://stooq.com/).
+    This package provides simple interface for fetching of the time series
+    in the format available on Stooq by ticker and for uer-defined time intervals.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+    data.table,
+    dplyr,
+    lubridate,
+    magrittr,
+    methods,
+    utils
+Suggests: 
+    testthat
+RoxygenNote: 7.1.0
