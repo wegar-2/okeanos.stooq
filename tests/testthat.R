@@ -1,4 +1,4 @@
 library(testthat)
-library(okeanos.stooq.interface)
+library(okeanos.stooq)
 
-test_check("okeanos.stooq.interface")
+test_check("okeanos.stooq")

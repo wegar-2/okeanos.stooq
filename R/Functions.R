@@ -12,11 +12,14 @@
 #' for which the data should be fetched
 #' @param dateEndDate - Date class scalar, points at the last day of the interval
 #' for which the data should be fetched
+#' @param bAddTickerToColnames - logical scalar, indicates whether the ticker
+#' should be added as prefix to the non-Date columns names of the columns
+#' of the data set retrieved from Stooq. Deault: TRUE
 #' @return list of data.tables; each member of the list corresponds to one ticker
 #' symbol in input vector cTickers
 #' @export
 lGetDailyDataForTickersFromStooq <- function(
-  cTickers, dateStartDate, dateEndDate) {
+  cTickers, dateStartDate, dateEndDate, bAddTickerToColnames = TRUE) {
 
 
   # 1. validate function parameters --------------------------------------------
@@ -34,6 +37,11 @@ lGetDailyDataForTickersFromStooq <- function(
   if (dateStartDate > dateEndDate) {
     stop("Incorrect function lGetListOfTickersDataFromStooq parameters ",
          " dateStartDate and dateEndDate - start date later than end date! ")
+  }
+  # 1.3. bAddTickerToColnames
+  if (!bIsScalarOfClass(objIn = bAddTickerToColnames, cClassName = "logical")) {
+    stop("Incorrect function lGetListOfTickersDataFromStooq parameter ",
+         "bAddTickerToColnames - it not a logical scalar! ")
   }
 
   # 2. fetch the data from Stooq -----------------------------------------------
@@ -75,6 +83,12 @@ lGetDailyDataForTickersFromStooq <- function(
       } else {
         dtIterData <- data.table::as.data.table(res)
         dtIterData[["Date"]] <- as.Date(dtIterData[["Date"]], format = "%Y-%m-%d")
+        # rename the non-Date columns
+        if (bAddTickerToColnames) {
+          cOldNames <- setdiff(x = colnames(dtIterData), y = "Date")
+          cNewColnames <- paste0(cIterTicker, "_", cOldNames)
+          data.table::setnames(x = dtIterData, old = cOldNames, new = cNewColnames)
+        }
         lDataOut[[cIterTicker]] <- dtIterData
       }
     }

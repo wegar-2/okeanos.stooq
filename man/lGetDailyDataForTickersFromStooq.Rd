@@ -4,7 +4,12 @@
 \alias{lGetDailyDataForTickersFromStooq}
 \title{Get daily data from Stooq}
 \usage{
-lGetDailyDataForTickersFromStooq(cTickers, dateStartDate, dateEndDate)
+lGetDailyDataForTickersFromStooq(
+  cTickers,
+  dateStartDate,
+  dateEndDate,
+  bAddTickerToColnames = TRUE
+)
 }
 \arguments{
 \item{cTickers}{- character vector of ticker symbols;}
@@ -14,6 +19,10 @@ for which the data should be fetched}
 
 \item{dateEndDate}{- Date class scalar, points at the last day of the interval
 for which the data should be fetched}
+
+\item{bAddTickerToColnames}{- logical scalar, indicates whether the ticker
+should be added as prefix to the non-Date columns names of the columns
+of the data set retrieved from Stooq. Deault: TRUE}
 }
 \value{
 list of data.tables; each member of the list corresponds to one ticker
